@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>jquery之ajax请求</title>
+        <style>
+            #result{
+                width: 200px;
+                height: 200px;
+                border: 10px solid #89b;
+            }
+        </style>
+    </head>
+    <body>
+        <button style="background: rgb(219, 130, 13);">
+            点击发送JSONP请求
+        </button>
+        <div id="result">
+
+        </div>
+        <script>
+            /**
+             * JSONP的原理：主要就是利用了 script 标签的src没有跨域限制来完成的 只能用于get请求
+             * 步骤：
+             * 1.通过script标签向服务器发送get请求，
+             * 2.服务器返回getData方法调用和赋值
+             * 3.getData方法调用，形参赋值，接受值向result赋值
+             * */
+
+            function getData(data) {
+                const result = document.getElementById('result');
+                result.innerHTML = data.name
+            }
+        </script>
+        <script src="http://192.168.3.232:8010/data"></script>
+    </body>
+
+</html>

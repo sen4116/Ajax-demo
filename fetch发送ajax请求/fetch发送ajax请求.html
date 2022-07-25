@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>jquery之ajax请求</title>
+        <style>
+            #result{
+                width: 200px;
+                height: 200px;
+                border: 10px solid #89b;
+            }
+        </style>
+    </head>
+    <body>
+        <button style="background: rgb(219, 130, 13);">
+            点击fetch自定义发送请求
+        </button>
+        <div id="result">
+
+        </div>
+        <script>
+            /**
+             * Fetch API 提供了一个 JavaScript 接口，
+             * 用于访问和操纵 HTTP 管道的一些具体部分，例如请求和响应。
+             * 它还提供了一个全局 fetch() 方法，
+             * 该方法提供了一种简单，合理的方式来跨网络异步获取资源。这种功能以前是使用 XMLHttpRequest 实现的。
+             * Fetch 提供了一个更理想的替代方案，可以很容易地被其他技术使用，例如  Service Workers。
+             * Fetch 还提供了专门的逻辑空间来定义其他与 HTTP 相关的概念，例如 CORS 和 HTTP 的扩展请注意，
+             * fetch 规范与 jQuery.ajax() 主要有以下的不同：当接收到一个代表错误的 HTTP 状态码时，
+             * 从 fetch() 返回的 Promise 不会被标记为 reject，即使响应的 HTTP 状态码是 404 或 500。
+             * 相反，它会将 Promise 状态标记为 resolve （如果响应的 HTTP 状态码不在 200 - 299 的范围内，
+             * 则设置 resolve 返回值的 ok 属性为 false ），
+             * 仅当网络故障时或请求被阻止时，才会标记为 reject。
+             * fetch 不会发送跨域 cookies，除非你使用了 credentials 的初始化选项。
+             * 
+             * Response.headers 只读包含此 Response 所关联的 Headers 对象。
+             * Response.ok 只读包含了一个布尔值，标示该 Response 成功（HTTP 状态码的范围在 200-299）。
+             * Response.redirected 只读 Response 是否来自一个重定向，如果是的话，它的 URL 列表将会有多个条目。
+             * Response.status 只读 包含 Response 的状态码 （例如 200 表示成功）。
+             * Response.statusText 只读 包含了与该 Response 状态码一致的状态信息（例如，OK对应 200）。
+             * Response.type 只读 包含 Response 的类型（例如，basic、cors）。
+             * Response.url 只读 包含 Response 的URL。
+             * Response.useFinalURL 包含了一个布尔值，来标示这是否是该 Response 的最终 URL。
+             * Response 实现了 Body 接口，所以以下属性亦可用：
+             * Body.body (en-US) 只读一个简单的 getter，用于暴露一个 ReadableStream 类型的 body 内容。
+             * Body.bodyUsed (en-US) 只读包含了一个布尔值 (en-US)来标示该 Response 是否读取过 Body。
+             * 方法
+             * Response.clone() 创建一个 Response 对象的克隆。
+             * Response.error() 返回一个绑定了网络错误的新的 Response 对象。
+             * Response.redirect() 用另一个 URL 创建一个新的 Response。
+             * Response 实现了 Body 接口，所以以下方法同样可用：
+             * Body.arrayBuffer() (en-US)
+             * 读取 Response 对象并且将它设置为已读（因为 Responses 对象被设置为了 stream 的方式，所以它们只能被读取一次），并返回一个被解析为 ArrayBuffer 格式的 Promise 对象。
+             * Body.blob() (en-US)
+             * 读取 Response 对象并且将它设置为已读（因为 Responses 对象被设置为了 stream 的方式，所以它们只能被读取一次），并返回一个被解析为 Blob 格式的 Promise 对象。
+             * Body.formData() (en-US)
+             * 读取Response 对象并且将它设置为已读（因为 Responses 对象被设置为了 stream 的方式，所以它们只能被读取一次），并返回一个被解析为 FormData 格式的 Promise 对象。
+             * Body.json() (en-US)
+             * 读取 Response 对象并且将它设置为已读（因为 Responses 对象被设置为了 stream 的方式，所以它们只能被读取一次），并返回一个被解析为 JSON 格式的 Promise 对象。
+             * Body.text() (en-US)
+             * 读取 Response 对象并且将它设置为已读（因为 Responses 对象被设置为了 stream 的方式，所以它们只能被读取一次），并返回一个被解析为 USVString 格式的 Promise 对象。
+             * */
+            const btn = document.querySelector("button")
+            btn.addEventListener('click',()=>{
+                //注意：get的请求中请求体不能有body，需要改为post请求
+                fetch("http://192.168.0.102:8008/fetch-server",{
+                    //设置请求方法
+                    method: 'post',
+                    //设置请求头
+                    headers: {
+                        name: 'admin',
+                        password: 'admin',
+                    },
+                    //设置请求体
+                    body: {
+                        a: 100,
+                        b: 200,
+                        c: 300,
+                    }
+                }).then(response => {
+                    return response.json();
+                }).then(response => {
+                    console.log(response)
+                })
+            })
+        </script>
+    </body>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>JSON数据传输</title>
+        <style>
+            #result{
+                width: 200px;
+                height: 200px;
+                border: 10px solid #89b;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="result"></div>
+        <script>
+            const result = document.getElementById('result')
+            window.onkeydown = function(){
+                let xhr = new XMLHttpRequest();
+                xhr.responseType = "json"
+                xhr.open('get','http://192.168.0.102:8002/json-server')
+                xhr.send();
+                xhr.onreadystatechange = ()=>{
+                    if(xhr.readyState == 4){
+                        if(xhr.status >= 200 && xhr.status < 300){
+                            //手动 将服务器请求的json数据转为数据
+                            // let obj = JSON.parse(xhr.response)
+                            // result.innerHTML = obj.name
+                            //自动转化 只需要xhr.responseTpye = "json"
+                            console.log(xhr.response)
+                            result.innerHTML = xhr.response.name
+                        }
+                    }
+                }
+            }
+        </script>
+    </body>
+</html>

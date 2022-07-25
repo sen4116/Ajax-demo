@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>jquery之ajax请求</title>
+        <style>
+            #result{
+                width: 200px;
+                height: 200px;
+                border: 10px solid #89b;
+            }
+        </style>
+    </head>
+    <body>
+        <button style="background: rgb(219, 130, 13);">
+            点击发送同源策略请求
+        </button>
+        <div id="result">
+
+        </div>
+        <script>
+            /**
+             * 同源策略：当前页面的url和ajax请求目标资源是同源的
+             * 同源：协议、域名、端口号必须完全相同
+             * 违背同源策略就是需要跨域
+             * */
+            const btn = document.getElementsByTagName("button")[0];
+            const result = document.getElementById('result');
+            btn.addEventListener('click',() => {
+                const x = new XMLHttpRequest();
+                //因为是先请求的服务器资源，服务器在返回的页面，这样是属于同源策略的，那么url就可以简写
+                x.open("Get",'/data');
+                x.send()
+                x.onreadystatechange = () => {
+                    if(x.readyState == 4){
+                        //服务器有可能返回 304 自从上次请求后，请求的网页未修改过。
+                        if(x.status >= 200 && x.status < 300){
+                            result.innerHTML = x.response
+                        }
+                    }
+                }
+            })
+        </script>
+    </body>
+
+</html>

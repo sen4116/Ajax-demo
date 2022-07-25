@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>jquery之ajax请求</title>
+        <style>
+            #result{
+                width: 200px;
+                height: 200px;
+                border: 10px solid #89b;
+            }
+        </style>
+    </head>
+    <body>
+        <button style="background: rgb(219, 130, 13);">
+            点击自定义发送请求
+        </button>
+        <button style="background: rgb(13, 219, 75);">
+            点击get方法请求
+        </button>
+        <button style="background: rgb(10, 25, 236);">
+            点击post方法请求
+        </button>
+        <div id="result">
+
+        </div>
+        <script src="../jquery-3.4.1.js"></script>
+        <script>
+            console.log($.ajax)
+            //jquery之ajax自定义请求
+            $("button").eq(0).click(() => {
+                let data = { a:100,b:200 };
+                $.ajax({
+                    //设置请求地址
+                    url: 'http://192.168.0.102:8006/jquery-server',
+                    //设置请求方法
+                    type: 'get',
+                    //设置请求参数
+                    data,
+                    //设置响应体结果
+                    dataType: 'json',
+                    //请求头信息
+                    headers: {
+                        c: 300,
+                        d: 400
+                    },
+                    //请求成功回调
+                    success: (data) => {
+                        console.log(data)
+                    },
+                    //设置响应时间
+                    timeout: '2000',
+                    //请求失败回调
+                    error: ()=>{
+
+                    },
+                })  
+            })
+
+            //jquery之ajax get请求
+            $('button').eq(1).click(() => {
+                /**
+                *get请求方法有4个参数：
+                *1.请求路径，
+                *2.请求携带数据，
+                *3.规定当请求成功时运行的函数额外的参数：data - 包含来自请求的结果数据,status - 包含请求的状态（"success"、"notmodified"、"error"、"timeout"、"parsererror"）,xhr - 包含 XMLHttpRequest 对象
+                *4.dataType: 规定预期的服务器响应的数据类型,
+                *"xml" - 一个 XML 文档
+                *"html" - HTML 作为纯文本
+                *"text" - 纯文本字符串
+                *"script" - 以 JavaScript 运行响应，并以纯文本返回
+                *"json" - 以 JSON 运行响应，并以 JavaScript 对象返回
+                *"jsonp" - 使用 JSONP 加载一个 JSON 块，将添加一个 "?callback=?" 到 URL 来规定回调
+                **/
+                $.get('http://192.168.0.102:8006/jquery-server','',(data,status) =>{
+                    console.log("数据: " + data + "\n状态: " + status)
+                    console.log(data.name)
+                },'json')
+            })
+
+            //jquery之ajax post请求
+            $('button').eq(2).click(() => {
+               /**
+                * post请求方法有4个参数
+                * 1.请求路径，
+                * 2.请求携带数据，
+                * 3.规定当请求成功时运行的函数额外的参数：data - 包含来自请求的结果数据,status - 包含请求的状态（"success"、"notmodified"、"error"、"timeout"、"parsererror"）,xhr - 包含 XMLHttpRequest 对象
+                * 4.dataType: 规定预期的服务器响应的数据类型,
+                * "xml" - 一个 XML 文档
+                * "html" - HTML 作为纯文本
+                * "text" - 纯文本字符串
+                * "script" - 以 JavaScript 运行响应，并以纯文本返回
+                * "json" - 以 JSON 运行响应，并以 JavaScript 对象返回
+                * "jsonp" - 使用 JSONP 加载一个 JSON 块，将添加一个 "?callback=?" 到 URL 来规定回调
+                * */ 
+                $.post('http://192.168.0.102:8006/jquery-server',{a: 100,b: 200},(data,status) => {
+                    console.log("数据: " + data + "\n状态: " + status)
+                    console.log(data.age)
+               },'json')
+            })
+        </script>
+    </body>
+
+</html>

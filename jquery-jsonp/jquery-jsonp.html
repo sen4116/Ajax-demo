@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>jquery之ajax请求</title>
+        <style>
+            #result{
+                width: 200px;
+                height: 200px;
+                border: 10px solid #89b;
+            }
+        </style>
+    </head>
+    <body>
+        <button style="background: rgb(219, 130, 13);">
+            点击发送jsonp请求
+        </button>
+        <div id="result">
+
+        </div>
+        <script src="../jquery-3.4.1.js"></script>
+        <script>
+            //jquery之ajax自定义请求
+            $("button").eq(0).click(() => {
+                //jquery jsonp固定写法在请求接口后面拼接 ?callback=?
+                $.getJSON("http://192.168.0.102:8012/jquery-jsonp?callback=?",(data)=>{
+                    $("#result").html(data.name)
+                })
+            })
+        </script>
+    </body>
+
+</html>

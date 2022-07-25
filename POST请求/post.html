@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <textarea name="" id="t1" cols="30" rows="10">
+
+    </textarea>
+    <script>
+        //获取标签信息
+        const text = document.getElementById('t1');
+        //给标签绑定事件 鼠标移动到指定物体事件  悬浮事件
+        text.addEventListener('mouseover',()=>{
+            // console.log("执行了悬浮事件")
+            /**创建请求对象，初始化请求类型和ip，
+             * 判断事件执行状态，
+             * 只有当status >= 200 && status <300 为成功后将请求的response赋值给html
+            */
+            const xhr = new XMLHttpRequest();
+            xhr.open("POST",'http:/192.168.0.102:8001/server');
+            //设置请求头信息 使用setRequestHeader 需要在open之后，send之前使用中，其中的参数键值对，第一个为键。第二个为值
+            xhr.setRequestHeader('Content-Type','application/x-www-form-urlencoded')
+            xhr.setRequestHeader('name','asen')//可以设置自定义请求头，但是需要后台设置允许自定义请求头
+            let params = 'a=300&b=200&c=100'
+            xhr.send(params);//post请求携带参数，是在发送请求的时候携带的
+            xhr.onreadystatechange = ()=>{
+                if(xhr.readyState == 4){
+                    if(xhr.status >= 200 && xhr.status < 300){
+                        console.log(xhr.response)
+                        text.innerHTML = xhr.response;
+                    }
+                }
+            }
+        })
+    </script>
+</body>
+<style>
+    #t1{
+        width: 200px;
+        height: 200px;
+        border: #68e91e solid 2px;
+    }
+</style>
+</html>

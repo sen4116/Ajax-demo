@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>ajax请求超时与异常处理</title>
+        <style>
+            #result{
+                width: 200px;
+                height: 200px;
+                border: 10px solid #89b;
+            }
+        </style>
+    </head>
+    <body>
+        <button>
+            点击发送请求
+        </button>
+        <div id="result">
+
+        </div>
+        <script>
+            const btn = document.getElementsByTagName("button")[0];
+            const result = document.getElementById("result");
+            btn.addEventListener("click",() => {
+                const xhr = new XMLHttpRequest();
+                //请求时间设置(超时设置)   2s
+                xhr.timeout = 2000;
+                //请求超时回调
+                xhr.ontimeout = () => {
+                    alert("网络异常，请稍后再试")
+                }
+                //请求异常回调
+                xhr.onerror = () => {
+                    alert("你的网络连接失败")
+                }
+                xhr.open("get","http://192.168.0.102:8003/server")
+                xhr.send();
+                xhr.onreadystatechange = () => {
+                    if(xhr.readyState === 4){
+                        if(xhr.status >= 200 && xhr.status < 300){
+                            result.innerHTML = xhr.response
+                        }
+                    }
+                }
+            }) 
+        </script>
+    </body>
+
+</html>

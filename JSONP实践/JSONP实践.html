@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>jquery之ajax请求</title>
+        <style>
+            #result{
+                width: 200px;
+                height: 200px;
+                border: 10px solid #89b;
+            }
+        </style>
+    </head>
+    <body>
+        用户名：<input type="text" id="name">
+        <p></p>
+        <script>
+           const input = document.getElementById('name');
+           const p = document.querySelector('p');
+
+            //声明judge函数
+            function judgeName(data){
+                //更改input边框颜色
+                input.style.border = "solid 1px #f00"
+                //更改p标签的内容
+                p.innerHTML = data.msg; 
+            }
+
+            //input标签失去光标的时，执行事件
+            input.onblur = () => {
+                //获取用户输入的值
+                let uName = this.value; 
+                //向服务器发送请求
+                //1.第一步：创建script标签
+                const script = document.createElement("script")
+                //2.第二步：设置src 发送get请求
+                script.src = "http://192.168.0.102:8011/check-server"
+                //3.第三步：向body插入script标签 实例化script
+                document.body.appendChild(script);
+            }
+        </script>
+    </body>
+
+</html>

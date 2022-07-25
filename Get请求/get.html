@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <button>发送get请求</button>
+    <textarea name="" id="t1" cols="30" rows="10">
+
+    </textarea>
+    <script>
+        const btn = document.getElementsByTagName('button')[0];
+        btn.onclick = function (){
+            // 创建请求对象
+            const xhr = new XMLHttpRequest();
+            //初始化 设置请求方法和请求url
+            // xhr.open('get','http://192.168.0.102:8000/server');
+            //请求时携带参数
+            xhr.open('get','http://192.168.0.102:8000/server?a=100&b=200&c=300');
+
+            //发送
+            xhr.send();
+            //事件绑定  处理server （服务器）返回结果
+            /**
+             * on 在...时候
+             * ready state 表示xhr 的状态 有 0，1，2，3，4
+             * 0 是 xhr未初始化； 1 是调用open方法；2 是 调用send方法
+             * 3 是部分服务器返回的结果；4 是服务器返回的全部结果
+             * 所以需要在xhr状态为4的时候处理返回的结果最好
+             * 
+             * change 改变的时候触发
+            */
+            xhr.onreadystatechange = function(){
+                //判断执行了xhr执行状态
+                if(xhr.readyState === 4){
+                    //判断响应码 2** 都算成功
+                    if(xhr.status >= 200 && xhr.status < 300){
+                        //处理结果  行 头 空行 体
+                        console.log(xhr.status)//状态码
+                        console.log(xhr.statusText)//状态字符串
+                        console.log(xhr.getAllResponseHeaders()) //所有响应头
+                        console.log(xhr.response)//响应体
+                        //将响应体赋值给文本域
+                        document.getElementById('t1').innerHTML = xhr.response;
+                    }
+                }
+            } 
+        } 
+    </script>
+</body>
+<style>
+    #t1{
+        width: 200px;
+        height: 200px;
+        border: #68e91e solid 2px;
+    }
+</style>
+</html>
