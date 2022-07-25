@@ -1,17 +1,22 @@
-Ajax笔记 part 1
-[掘金地址](ajax - 啊森的专栏 - 掘金 (juejin.cn))
+# Ajax笔记 part 1
+
+[掘金地址]([ajax - 啊森的专栏 - 掘金 (juejin.cn)](https://juejin.cn/column/7072006997046116360))
 
 Ajax优点：1.页面不刷新，与服务器进行通信。
 
-​ 2.用户在页面中做操作，从而实现局部数据刷新，数据懒加载功能。
+​		 2.用户在页面中做操作，从而实现局部数据刷新，数据懒加载功能。
 
 缺点：1.没有浏览记录，不能退回
 
-​ 2.当a域名网站请求b网站资源存在跨域请求问题
+​	 2.当a域名网站请求b网站资源存在跨域请求问题
 
-​ 3.因为是做局部刷新且异步请求，请求到的数据并不会直接出现在页面上，只会动态创建标签进行赋值，所以可以实现反爬虫（seo）的效果
+​	 3.因为是做局部刷新且异步请求，请求到的数据并不会直接出现在页面上，只会动态创建标签进行赋值，所以可以实现反爬虫（seo）的效果
+
+
 
 http协议【超文本传输协议】，协议详细规定了浏览器和万维网服务器之间互相通信的规则
+
+
 
 http请求报文： 格式与参数（重点）
 
@@ -19,30 +24,33 @@ http请求报文： 格式与参数（重点）
 
 头: Host: atguigu.com
 
-​ Cookie:name=guigu
+​	Cookie:name=guigu
 
-​ Content-type : application/x-www-from-urlencoded
+​	Content-type : application/x-www-from-urlencoded
 
-​ User-Agent: chrome 83
-
-空行
-
-体：get请求类型可以有请求体，也可以没有请求体，post请求类型不为空
-
-http相应报文
-
-行： 1.请求协议版本 HTTP/1.1 2.http状态码：200
-
-头 Content-Type: text/html; charset=utf-8 (charset:字符串)
-
-​ Conten-length:2048
-
-​ Conten-encoding:gzip
+​	User-Agent: chrome 83
 
 空行
 
-体 请求后所得的内容
+体：get请求类型可以有请求体，也可以没有请求体，post请求类型不为空 
 
+
+
+http相应报文 
+
+行： 1.请求协议版本 HTTP/1.1 2.http状态码：200 
+
+头   Content-Type: text/html; charset=utf-8 (charset:字符串)
+
+​	 Conten-length:2048
+
+​	 Conten-encoding:gzip
+
+空行
+
+体	请求后所得的内容
+
+```javascript
 	<html>
 		<head>
 		</head>
@@ -50,75 +58,106 @@ http相应报文
 			<h1>阿森</h1>	
 		</body>
 	</head>
-​
+```
 
-HTTP状态码
-1XX
-：信息状态码
 
-100 Continue 继续，一般在发送post请求时，已发送了http header之后服务端将返回此信息，表示确认，之后发送具体参数信息
-2XX
-：成功状态码
 
-200 OK 正常返回信息
-201 Created 请求成功并且服务器创建了新的资源
-202 Accepted 服务器已接受请求，但尚未处理
-3XX
-：重定向
+​	</html>	
 
-301 Moved Permanently 请求的网页已永久移动到新位置。
-302 Found 临时性重定向。
-303 See Other 临时性重定向，且总是使用 GET 请求新的 URI。
-304 Not Modified 自从上次请求后，请求的网页未修改过。
-4XX
-：客户端错误
+#### **HTTP状态码**
 
-400 Bad Request 服务器无法理解请求的格式，客户端不应当尝试再次使用相同的内容发起请求。
-401 Unauthorized 请求未授权。
-403 Forbidden 禁止访问。
-404 Not Found 找不到如何与 URI 相匹配的资源。
-5XX:
-服务器错误
+- ```
+  1XX
+  ```
 
-500 Internal Server Error 最常见的服务器端错误。
-503 Service Unavailable 服务器端暂时无法处理请求（可能是过载或维护）
+  ：信息状态码
+
+  - `100 Continue` 继续，一般在发送`post`请求时，已发送了`http header`之后服务端将返回此信息，表示确认，之后发送具体参数信息
+
+- ```
+  2XX
+  ```
+
+  ：成功状态码
+
+  - `200 OK` 正常返回信息
+  - `201 Created` 请求成功并且服务器创建了新的资源
+  - `202 Accepted` 服务器已接受请求，但尚未处理
+
+- ```
+  3XX
+  ```
+
+  ：重定向
+
+  - `301 Moved Permanently` 请求的网页已永久移动到新位置。
+  - `302 Found` 临时性重定向。
+  - `303 See Other` 临时性重定向，且总是使用 `GET` 请求新的 `URI`。
+  - `304 Not Modified` 自从上次请求后，请求的网页未修改过。
+
+- ```
+  4XX
+  ```
+
+  ：客户端错误
+
+  - `400 Bad Request` 服务器无法理解请求的格式，客户端不应当尝试再次使用相同的内容发起请求。
+  - `401 Unauthorized` 请求未授权。
+  - `403 Forbidden` 禁止访问。
+  - `404 Not Found` 找不到如何与 `URI` 相匹配的资源。
+
+- ```
+  5XX:
+  ```
+
+   
+
+  服务器错误
+
+  - `500 Internal Server Error` 最常见的服务器端错误。
+  - `503 Service Unavailable` 服务器端暂时无法处理请求（可能是过载或维护）
+
+
+
 浏览器控制台查看报文
 
 在浏览器控制台点击network查看网站当前页面所有请求，
 
-headers：查看报文 1.General，2.Response Headers:响应头，3.Request Headers:请求头(view source:查看未解析过的请求头，view parsed：查看解析过的请求头)，4.Query String Parameters（对url参数进行了参数解析）
+headers：查看报文   1.General，2.Response Headers:响应头，3.Request Headers:请求头(view source:查看未解析过的请求头，view parsed：查看解析过的请求头)，4.Query String Parameters（对url参数进行了参数解析）
 
 preview：对查看相应报文的预览
 
 response ：对请求数据做解析
 
+
+
 ajax准备工作
 
-1.安装node.js 在cmd中查看node版本 node -v（不要下载最新的node，兼容性差）
+1.安装node.js 	在cmd中查看node版本 node -v（不要下载最新的node，兼容性差）
 
-旧版本安装 https://nodejs.org/zh-cn/download/releases/
+旧版本安装 https://nodejs.org/zh-cn/download/releases/ 
 
-image-20220327215536557
+![image-20220327215536557](C:\Users\1477715879\AppData\Roaming\Typora\typora-user-images\image-20220327215536557.png)
 
 找到旧版本点击下载，下载msi文件就可以.
 
-image-20220327215715098
+![image-20220327215715098](C:\Users\1477715879\AppData\Roaming\Typora\typora-user-images\image-20220327215715098.png)
 
 设置npm 环境变量 在用户变量 新建添加 C:\Users\你电脑的用户名\AppData\Roaming\npm
 
-image-20220327220604431
+![image-20220327220604431](C:\Users\1477715879\AppData\Roaming\Typora\typora-user-images\image-20220327220604431.png)
 
-2.安装express const express = require('express') //引用express模块 需要在安装express文件下引用（查看官网如何安装）
+2.安装express 	 const express = require('express')  //引用express模块 需要在安装express文件下引用（[查看官网如何安装](https://www.expressjs.com.cn/starter/installing.html)）
 
 3.创建应用对象 const app = express ();
 
-4.创建路由规则 resquest:是对请求报文的封装，response:是对响应报文的封装
+4.创建路由规则  resquest:是对请求报文的封装，response:是对响应报文的封装
 
 app.get('/',(resquest,response)=>{
 
-​ //设置响应
+​	//设置响应
 
-​ response.send('HELLO AJAX')
+​	response.send('HELLO AJAX')
 
 })
 
@@ -126,20 +165,25 @@ app.get('/',(resquest,response)=>{
 
 app.listen(8000,()=>{
 
-​ console.log('8000端口已经启动完毕')
+​	console.log('8000端口已经启动完毕')
 
 })
 
-6.启动服务，用node 在书写express.js文件打开终端执行 输入node “文件名” ，再用浏览器输入本地ip +端口号
+6.启动服务，用node 在书写express.js文件打开终端执行 输入node “文件名”  ，再用浏览器输入本地ip +端口号
 
-查询本地ip 在cmd 中输入输入ipconfig命令查看ip
+查询本地ip 在cmd 中输入**输入ipconfig命令查看ip**
 
-image-20220327224536727
+![image-20220327224536727](C:\Users\1477715879\AppData\Roaming\Typora\typora-user-images\image-20220327224536727.png)
 
-Ajax笔记 part 2
-1.Get请求
+
+
+# Ajax笔记 part 2	
+
+#### 1.Get请求
+
 准备好的html
 
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -198,8 +242,11 @@ Ajax笔记 part 2
     }
 </style>
 </html>
+```
+
 准备好 运行的js文件 用npm + 文件名
 
+```js
 //引用express模块
 const express = require('express');
 //实例化对象
@@ -215,7 +262,11 @@ app.get('/server',(resquset,response)=>{
 app.listen(8000,()=>{
     console.log('get请求准备完毕')
 })
-2.请求时携带参数
+```
+
+#### 2.请求时携带参数
+
+```javascript
 // 创建请求对象
 const xhr = new XMLHttpRequest();
 //初始化 设置请求方法和请求url
@@ -224,11 +275,15 @@ const xhr = new XMLHttpRequest();
 xhr.open('get','http://192.168.0.102:8000/server?a=100&b=200&c=300');
 //发送
 xhr.send();
+```
+
 只有get请求在url携带请求参数
 
-image-20220329225932656
+![image-20220329225932656](C:\Users\1477715879\AppData\Roaming\Typora\typora-user-images\image-20220329225932656.png)
 
-3.POST请求
+#### 3.POST请求
+
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -273,6 +328,9 @@ image-20220329225932656
     }
 </style>
 </html>
+```
+
+```javascipt
 //引用express模块
 const express = require('express');
 //实例化对象
@@ -297,9 +355,13 @@ app.listen(8001,()=>{
 })
 
 //回顾点：每个请求方法的不同，要规划不同请求方试的路由
-4.POST请求携带参数的方试
+```
+
+#### 4.POST请求携带参数的方试
+
 post请求携带参数，是在发送请求的时候携带的
 
+```javascript
 const xhr = new XMLHttpRequest();
 xhr.open("POST",'http:/192.168.0.102:8001/server');
 let params = 'a=300&b=200&c=100'
@@ -312,11 +374,15 @@ xhr.onreadystatechange = ()=>{
         }
     }
 }
-image-20220329235050406
+```
 
-5.设置请求头
+![image-20220329235050406](C:\Users\1477715879\AppData\Roaming\Typora\typora-user-images\image-20220329235050406.png)
+
+#### 5.设置请求头
+
 设置请求头一般传递用户身份识别信息
 
+```javascript
  const xhr = new XMLHttpRequest();
  xhr.open("POST",'http:/192.168.0.102:8001/server');
  //设置请求头信息 使用setRequestHeader 需要在open之后，send之前使用中，其中的参数键值对，第一个为键。第二个为值
@@ -332,6 +398,9 @@ image-20220329235050406
          }
      }
  }
+```
+
+```javascript
 //post规划路由  
 // app.post('/server',(resquset,response)=>{
 //     // console.log(response)
@@ -351,7 +420,11 @@ app.all('/server',(resquset,response)=>{
     //设置响应体
     response.send('hello Ajax all')
 })
-6.服务器传递JSON数据
+```
+
+#### 6.服务器传递JSON数据
+
+```javascript
  const result = document.getElementById('result')
  //监听键盘按下事件
  window.onkeydown = function(){
@@ -372,6 +445,9 @@ app.all('/server',(resquset,response)=>{
          }
      }
  }
+```
+
+```javascript
 //引用express模块
 const express = require('express');
 //实例化对象
@@ -398,12 +474,15 @@ app.all('/json-server',(resquset,response)=>{
 app.listen(8002,()=>{
     console.log('json请求准备完毕')
 })
-7.安装nodemon监听服务器(server)自动重启
+```
+
+#### 7.安装nodemon监听服务器(server)自动重启
+
 需要监听哪个文件就去哪个文件下面输入nodemon "文件名"
 
 问题：系统禁止运行脚本。
 
-解决方案
+解决方案 
 
 1.输入nodemon.cmd "运行文件夹名字"
 
@@ -413,14 +492,17 @@ app.listen(8002,()=>{
 
 在管理员窗口输入set-ExecutionPolicy RemoteSigned 回复输入Y即可
 
-image-20220406220051426
+![image-20220406220051426](C:\Users\1477715879\AppData\Roaming\Typora\typora-user-images\image-20220406220051426.png)
 
-Ajax笔记 part 3
-1.请求超时或请求异常处理
-timeout //请求超时回调
+# Ajax笔记 part 3
 
-onerroe //请求异常回调
+#### 1.请求超时或请求异常处理
 
+timeout	//请求超时回调
+
+onerroe	//请求异常回调
+
+```javascript
 const btn = document.getElementsByTagName("button")[0];
 const result = document.getElementById("result");
 btn.addEventListener("click",() => {
@@ -445,6 +527,9 @@ xhr.open("get","http://192.168.0.102:8003/server")
         }
     }
 }) 
+```
+
+```javascript
 //引用express模块
 const express = require('express');
 //实例化对象
@@ -466,9 +551,15 @@ app.get('/server',(resquset,response)=>{
 app.listen(8003,()=>{
     console.log('请求超时准备完毕')
 })
-2.手动取消请求
-abort //取消当前请求
+```
 
+
+
+#### 2.手动取消请求
+
+abort	//取消当前请求
+
+```javascript
 const btn1 = document.getElementsByTagName("button")[0];
 const btn2 = document.getElementsByTagName("button")[1];
 const result = document.getElementById("result");
@@ -489,7 +580,11 @@ btn2.addEventListener("click", () => {
 //手动取消请求
 	xhr.abort()
 })
-3.重复发送请求(节流)
+```
+
+#### 3.重复发送请求(节流)
+
+```javascript
 const btn1 = document.getElementsByTagName("button")[0];
 const result = document.getElementById("result");
 let xhr,
@@ -515,6 +610,9 @@ btn1.addEventListener("click",() => {
 		}
 	}
 }) 
+```
+
+```javascript
 //引用express模块
 const express = require('express');
 //实例化对象
@@ -543,45 +641,51 @@ app.get('/server',(resquset,response)=>{
 app.listen(8005,()=>{
     console.log('重复请求准备完毕')
 })
-Ajax笔记part 4
-1.jQuery中使用Ajax
-GET 和 POST 方法的区别：
-1、发送的数据数量
+```
+
+# Ajax笔记part 4
+
+#### 1.jQuery中使用Ajax
+
+##### **GET 和 POST 方法的区别**：
+
+**1、发送的数据数量**
 
 在 GET 中，只能发送有限数量的数据，因为数据是在 URL 中发送的。
 
 在 POST 中，可以发送大量的数据，因为数据是在正文主体中发送的。
 
-2、安全性
+**2、安全性**
 
 GET 方法发送的数据不受保护，因为数据在 URL 栏中公开，这增加了漏洞和黑客攻击的风险。
 
 POST 方法发送的数据是安全的，因为数据未在 URL 栏中公开，还可以在其中使用多种编码技术，这使其具有弹性。
 
-3、加入书签中
+**3、加入书签中**
 
 GET 查询的结果可以加入书签中，因为它以 URL 的形式存在；而 POST 查询的结果无法加入书签中。
 
-4、编码
+**4、编码**
 
 在表单中使用 GET 方法时，数据类型中只接受 ASCII 字符。
 
 在表单提交时，POST 方法不绑定表单数据类型，并允许二进制和 ASCII 字符。
 
-5、可变大小
+**5、可变大小**
 
 GET 方法中的可变大小约为 2000 个字符。
 
 POST 方法最多允许 8 Mb 的可变大小。
 
-6、缓存
+**6、缓存**
 
 GET 方法的数据是可缓存的，而 POST 方法的数据是无法缓存的。
 
-7、主要作用
+**7、主要作用**
 
 GET 方法主要用于获取信息。而 POST 方法主要用于更新数据。
 
+```javascript
 <body>
         <button style="background: rgb(219, 130, 13);">
             点击自定义发送请求
@@ -671,6 +775,9 @@ GET 方法主要用于获取信息。而 POST 方法主要用于更新数据。
             })
         </script>
     </body>
+```
+
+```js
 //引用express模块
 const express = require('express');
 //实例化对象
@@ -697,8 +804,13 @@ app.all('/jquery-server',(resquset,response)=>{
 app.listen(8006,()=>{
     console.log('jquery请求准备完毕')
 })
-2.axios中使用Ajax
-axios自定义请求，post请求，get请求
+```
+
+#### 2.axios中使用Ajax
+
+##### axios自定义请求，post请求，get请求
+
+```javascript
 <body>
     <button style="background: rgb(219, 130, 13)">点击自定义发送请求</button>
     <button style="background: rgb(13, 219, 75)">点击get方法请求</button>
@@ -912,6 +1024,9 @@ let obj = {
   })
 }
 </script>
+```
+
+```javascript
 //引用express模块
 const express = require('express');
 //实例化对象
@@ -940,8 +1055,13 @@ app.all('/axios-server',(resquset,response)=>{
 app.listen(8007,()=>{
     console.log('axios请求准备完毕')
 })
-3.fetch中使用Ajax
-fetch是javascript提供的全局接口
+```
+
+#### 3.fetch中使用Ajax
+
+##### fetch是javascript提供的全局接口
+
+```javascript
  <button style="background: rgb(219, 130, 13);">
             点击fetch自定义发送请求
         </button>
@@ -1014,6 +1134,9 @@ fetch是javascript提供的全局接口
                 })
             })
         </script>
+```
+
+```javascript
 //引用express模块
 const express = require('express');
 //实例化对象
@@ -1040,8 +1163,12 @@ app.all('/fetch-server',(resquset,response)=>{
 app.listen(8008,()=>{
     console.log('fetch请求准备完毕')
 })
-Ajax笔记 part4
-同源策略
+```
+
+# Ajax笔记 part4
+
+#### 同源策略
+
 同源策略：当前页面的url和ajax请求目标资源是同源的
 
 同源：协议、域名、端口号必须完全相同
@@ -1050,6 +1177,7 @@ Ajax笔记 part4
 
 先请求的服务器资源，服务器在返回的页面，这样是达到同源策略的标准
 
+```javascript
 <button style="background: rgb(219, 130, 13);">
 	点击发送同源策略请求
 </button>
@@ -1079,6 +1207,9 @@ Ajax笔记 part4
         }
     })
 </script>
+```
+
+```javascript
 const express = require('express');
 
 const app = express();
@@ -1097,9 +1228,13 @@ app.get('/data',(resquset,response) => {
 app.listen(8009,() => {
     console.log('同源策略请求已准备')
 })
-jsonp跨域
+```
+
+#### jsonp跨域
+
 JSONP跨域的原理：主要就是利用了 script 标签的src没有跨域限制来完成的 只能用于get请求
 
+```javascript
 <div id="result">
 
 </div>
@@ -1118,6 +1253,9 @@ function getData(data) {
 }
 </script>
 <script src="http://192.168.3.232:8010/data"></script>
+```
+
+```javascript
 const express = require('express');
 
 const app = express();
@@ -1135,7 +1273,13 @@ app.get('/data',(resquset,response) => {
 app.listen(8010,() => {
     console.log('JSONP请求已准备')
 })
-JSONP跨域实践
+```
+
+
+
+#### JSONP跨域实践
+
+```javascript
 用户名：<input type="text" id="name">
 <p></p>
 <script>
@@ -1163,6 +1307,9 @@ input.onblur = () => {
     document.body.appendChild(script);
 }
 </script>
+```
+
+```javascript
 const { response } = require('express');
 const express = require('express');
 const app = express();
@@ -1177,7 +1324,13 @@ app.all('/check-server',(request,response) => {
 app.listen(8011,()=>{
     console.log("jsonp实践已经启动")
 })
-jQuery发送json请求
+```
+
+
+
+#### jQuery发送json请求
+
+```javascript
 <button style="background: rgb(219, 130, 13);">
     点击发送jsonp请求
 </button>
@@ -1194,6 +1347,9 @@ $("button").eq(0).click(() => {
     })
 })
 </script>
+```
+
+```javascript
 //引用express模块
 const express = require('express');
 //实例化对象
@@ -1217,12 +1373,19 @@ app.all('/jquery-jsonp',(resquset,response)=>{
 app.listen(8012,()=>{
     console.log('jquery-jsonp请求准备完毕')
 })
-CORS跨域
+```
+
+#### CORS跨域
+
 在请求方法中设置请求头信息
 
+```
 response.setHeader('Access-Control-Allow-Origin','*')
+```
+
 例如
 
+```
 app.get('/server',(resquset,response)=>{
     // console.log(response)
     //设置允许自定义请求头
@@ -1238,18 +1401,5 @@ app.get('/server',(resquset,response)=>{
     obj = JSON.stringify(obj)
     response.send(obj);
 })
-Footer
-© 2022 GitHub, Inc.
-Footer navigation
-Terms
-Privacy
-Security
-Status
-Docs
-Contact GitHub
-Pricing
-API
-Training
-Blog
-About
-You have no unread notifications
+```
+
